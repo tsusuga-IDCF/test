@@ -1,0 +1,10 @@
+---
+- name: Webserver-install
+  hosts: webserver
+  roles:
+    - nginx
+    - php-fpm
+- name: DBserver-install
+  hosts: dbserver
+  roles:
+    - mysql

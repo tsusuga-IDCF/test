@@ -1,0 +1,29 @@
+---
+- name: nginx setup
+  hosts: webserver
+  tasks:
+    - dnf:
+        name: nginx
+        state: latest
+
+- name: Send nginx.conf
+  hosts: webserver
+  tasks:
+    - template:
+        src: /roles/template/nginx.conf.j2
+        dest: /etc/nginx/nginx.conf
+      notify: restart nginx
+
+- name: Enable nginx
+  hosts: webserver
+  tasks:
+    - service:
+        name: nginx
+        enabled: yes
+
+- name: Start nginx
+  hosts: webserver
+  tasks:
+    - service:
+        name: nginx
+        state: started

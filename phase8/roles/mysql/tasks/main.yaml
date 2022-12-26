@@ -1,0 +1,19 @@
+---
+- name: Install mysql
+  dnf: name={{ item }} state=latest
+  with_items:
+    - mysql
+    - mysql-server
+
+- name: Send mysql config
+  copy:
+    src: my.conf
+    dest: /etc/my.conf
+  notify:
+    - restart mysqld
+
+- name: Start mysql
+  service:
+    name: mysqld
+    state: started
+    enabled: yes
