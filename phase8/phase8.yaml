@@ -7,4 +7,9 @@
 - name: DBserver-install
   hosts: dbserver
   roles:
+    - python
     - mysql
+- name: Wordpress-install
+  hosts: webserver
+  roles:
+    - wordpress

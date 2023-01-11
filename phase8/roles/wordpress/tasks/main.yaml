@@ -1,0 +1,26 @@
+---
+- name: Download Wordpress
+  get_url:
+    url: https://ja.wordpress.org/wordpress-6.1.1-ja.tar.gz
+    dest: /tmp/wordpress-6.1.1-ja.tar.gz
+
+#- name: check wordpress exist
+#  shell: ls /var/www | grep wordpress
+#  register: ls_result_wp
+#  changed_when: False
+
+- name: Extract archive
+  #when: ls_result_wp.rc == 1
+  unarchive:
+    creates: /var/www/wordpress
+    src: /tmp/wordpress-6.1.1-ja.tar.gz
+    dest: /var/www
+    remote_src: yes
+
+- name: chown -R nginx:nginx /var/www/wordpress
+  file:
+    path: /var/www/wordpress
+    state: directory
+    owner: nginx
+    group: nginx
+    recurse: yes

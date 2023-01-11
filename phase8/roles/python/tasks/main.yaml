@@ -1,0 +1,13 @@
+---
+- name: Install python
+  dnf: name={{ item }} state=latest
+  with_items:
+    - gcc
+    - python38
+    - python3-devel
+
+- name: upgrade pip
+  pip:
+    name: pip
+    executable: pip3
+    state: latest
