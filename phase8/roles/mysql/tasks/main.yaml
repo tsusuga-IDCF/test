@@ -1,10 +1,11 @@
 ---
 - name: Install mysql
-  dnf: name={{ item }} state=latest
-  with_items:
-    - mysql
-    - mysql-server
-    - mysql-devel
+  dnf:
+    name:
+      - mysql
+      - mysql-server
+      - mysql-devel
+    state: latest
 
 - name: Install PyMySQL
   pip:
@@ -24,7 +25,14 @@
     enabled: yes
 
 - name: Create WordPress database
-  mysql_db: name={{wp_db_name}} state=present
+  mysql_db:
+    name: "{ { wp_db_name } }"
+    state: present
 
 - name: Create WordPress database user
-  mysql_user: name={{wp_db_user}} password={{wp_db_password}} priv={{wp_db_name}}.*:ALL host="*" state=present
+  mysql_user:
+    name: "{{wp_db_user}}"
+    password: "{{wp_db_password}}"
+    priv: "{{wp_db_name}}.*:ALL"
+    host: "*"
+    state: present
